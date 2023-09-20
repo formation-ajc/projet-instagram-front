@@ -11,10 +11,32 @@ export type ModalProps = {
     className?: string,
     children?: ReactElement | ReactElement[]
 }
+
+type ChildWithSetOpenProps = {
+    openModal: () => void;
+    closeModal: () => void; // Include closeModal in the type
+};
 const Modal = ({label, prefixIcon, suffixIcon, className, children }:ModalProps) => {
     const [open, setOpen] = useState(false)
 
     const cancelButtonRef = useRef(null)
+
+    const closeModal = () => {
+        setOpen(false);
+    };
+
+    const openModal = () => {
+        setOpen(true);
+    };
+
+    // Pass setOpen and closeModal as props to children
+    const childrenWithProps = React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+            const childProps: ChildWithSetOpenProps = { openModal, closeModal };
+            return React.cloneElement(child, childProps);
+        }
+        return child;
+    });
 
     return (
         <>
@@ -52,7 +74,7 @@ const Modal = ({label, prefixIcon, suffixIcon, className, children }:ModalProps)
                             >
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-primary-950 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                     <div className="bg-gray-primary-950">
-                                        {children}
+                                        {childrenWithProps}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

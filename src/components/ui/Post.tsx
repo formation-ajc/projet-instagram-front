@@ -17,9 +17,18 @@ export type PostProps = {
     like: number,
     description: string,
     comment?: string,
+    src: string
 }
 
-const Post = ({username, date, like, description, comment }: PostProps) => {
+const Post = ({username, date, like, description, comment, src}: PostProps) => {
+    function arrayBufferToDataURI(arrayBuffer: any) {
+        const bytes = new Uint8Array(arrayBuffer);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return 'data:image/jpeg;base64,' + btoa(binary);
+    }
 
     return (
         <>
@@ -41,8 +50,8 @@ const Post = ({username, date, like, description, comment }: PostProps) => {
                         <MoreHoriz/>
                     </div>
                 </div>
-                <div className={"h-[585px] border border-gray-primary-900 rounded-md"}>
-                    img
+                <div className={"h-[585px] border border-gray-primary-900 rounded-md flex justify-center items-center"}>
+                    <img src={arrayBufferToDataURI(src)} className={"h-full w-full object-contain"} alt={""}/>
                 </div>
                 <div className={"flex flex-col gap-2"}>
                     <div className={"flex flex-row justify-between"}>
@@ -64,7 +73,7 @@ const Post = ({username, date, like, description, comment }: PostProps) => {
                     <div>{description}</div>
                 </div>
                 <div className={"flex flex-row text-sm gap-3"}>Show the comments</div>
-                <hr className={"mt-2 border-gray-primary-900 w-full"}/>
+                <hr className={"mt-2 mb-10 border-gray-primary-900 w-full"}/>
             </div>
         </>
     );

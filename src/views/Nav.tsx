@@ -57,7 +57,7 @@ const Nav = ({ children }: NavProps) => {
                         className={classNames("text-xl flex-start text-white hover:bg-gray-primary-900",
                             // (pageName === "Profile")?"bg-green-primary-700 text-green-primary-50":"bg-green-primary-400 text-black-primary"
                         )}
-                        to={"profile"}
+                        to={""}
                         prefixIcon={<Home />}
                     />
                     <Button
@@ -125,7 +125,7 @@ const Nav = ({ children }: NavProps) => {
                         // (pageName === "")?"hidden":""
                     )}
                 >
-                    <div className={"flex flex-1 overflow-auto"}>
+                    <div className={"flex flex-1 overflow-auto bg-black-primary"}>
                         {children}
                     </div>
                 </div>
