@@ -10,7 +10,7 @@ import {AuthService} from "../../services/Auth";
 import {UserRegister} from "../../models/UserModel";
 import classNames from "classnames";
 import {toast} from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Register = () => {
   const navigate  = useNavigate();
@@ -21,6 +21,7 @@ const Register = () => {
     authService.register(data)
       ?.then((e) => {
         console.log(e.data)
+        toast.success("Successfully registered");
         navigate("/login");
       })
       .catch((error) => {
@@ -33,10 +34,10 @@ const Register = () => {
     <Auth>
       <form
           onSubmit={form.handleSubmit(submit)}
-          className="flex flex-col p-5 rounded-r-xl items-center justify-center h-full sm:w-2/3"
+          className="flex flex-col rounded-r-xl items-center justify-center h-full"
       >
-        <div className="flex flex-row text-3xl font-bold mb-5 text-green-primary-50">
-          Register
+        <div className="flex flex-row text-md font-semibold mb-5 text-gray-primary-700 justify-center items-center text-center">
+          Sign up to see your friends' photos and videos.
         </div>
         <div className="flex flex-row justify-center gap-3 w-full">
           <Textfield
@@ -45,7 +46,6 @@ const Register = () => {
               placeholder="Firstname"
               type="text"
               required={true}
-              backgroundColor={"bg-green-primary-50"}
           />
           <Textfield
               form={form}
@@ -53,7 +53,6 @@ const Register = () => {
               placeholder="Lastname"
               type="text"
               required={true}
-              backgroundColor={"bg-green-primary-50"}
           />
         </div>
         <Textfield
@@ -63,7 +62,6 @@ const Register = () => {
             type="text"
             prefixIcon={<Email/>}
             required={true}
-            backgroundColor={"bg-green-primary-50"}
         />
         <Textfield
             form={form}
@@ -72,7 +70,6 @@ const Register = () => {
             type="password"
             prefixIcon={<LockIcon/>}
             required={true}
-            backgroundColor={"bg-green-primary-50"}
         />
         <Textfield
             form={form}
@@ -81,24 +78,31 @@ const Register = () => {
             type="password"
             prefixIcon={<LockIcon/>}
             required={true}
-            backgroundColor={"bg-green-primary-50"}
         />
+        <div className="mb-6 flex flex-col gap-3 text-xs text-gray-primary-700 justify-center items-center text-center">
+          <div>
+            People who use our service may have imported your details on Instagram.
+          </div>
+          <div>
+            By registering, you agree to our Terms and Conditions. Find out how we collect, use and share your data by reading our Privacy Policy and how we use cookies and similar technologies by consulting our Cookie Usage Policy.
+          </div>
+        </div>
         <Button
-            label="Sign up"
-            // to="/"
-            prefixIcon={<LoginIcon/>}
-            className="bg-green-primary-700 hover:bg-green-primary-600 text-green-primary-50 font-bold mb-2"
+            label="Create"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold mb-2"
             type="submit"
         />
-        <Button
-            label="Cancel"
-            to="/login"
-            // icon={<AccessibilityNewIcon  />}
-            className={classNames(
-                "bg-yellow-primary-500 text-yellow-primary-50 font-bold",
-                "hover:bg-yellow-primary-600"
-            )}
-        />
+        <div className={"flex w-full flex-row gap-6 items-center my-2"}>
+          <hr className={"flex-1 border-gray-primary-200"}/>
+          <div className={"text-gray-primary-700"}>OR</div>
+          <hr className={"flex-1 border-gray-primary-200"}/>
+        </div>
+        <div className={"flex w-full flex-row gap-2 items-center text-gray-primary-700 justify-center"}>
+          <div className={"text-gray-primary-700"}>Do you have an account?</div>
+          <Link to="/login">
+            <div className={"text-blue-500"}>Login</div>
+          </Link>
+        </div>
       </form>
     </Auth>
   );

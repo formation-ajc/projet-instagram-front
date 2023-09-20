@@ -14,7 +14,7 @@ export type ProtectedRouteProps = {
 const ProtectedAuthRoute = ({ children }: ProtectedRouteProps) => {
     const user  = User.getUser();
     if ((Object.keys(user).length === 0)) {
-        return <Navigate to="/" />;
+        return <Navigate to="/login" />;
     }
     return (
         <>

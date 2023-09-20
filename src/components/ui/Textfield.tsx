@@ -33,7 +33,7 @@ const Textfield = ({form, id, label, placeholder, prefixIcon, type, className, r
         {
           label?
           <div className="mb-0.5">
-            <label className="ml-2 text-green-primary-900 font-semibold">
+            <label className="ml-2 text-black-primary font-semibold">
               {label}
             </label>
           </div>
@@ -45,13 +45,15 @@ const Textfield = ({form, id, label, placeholder, prefixIcon, type, className, r
 
             <input
               className={classNames(
-                " p-2 text-green-primary-900 w-full",
-                "leading-tight focus:outline-none peer placeholder-gray-dark",
-                (prefixIcon && type === "password")?"rounded-l-xl border-y border-r-0 border-l pl-10":"",
-                (prefixIcon && type !== "password")?"rounded-xl border-t border-b border-r border-l pl-10":"",
-                (!prefixIcon && type === "password")?"rounded-l-xl border-l border-t border-b border-r-0":"",
-                (!prefixIcon && type !== "password")?"rounded-xl border":"",
-                form.formState.errors[id]?"border-red-600 focus:border-red-600":"border-transparent before:bg-green-primary-100 focus:bg-green-primary-200 focus:shadow-md focus:border-green-primary-900",
+                "p-2 text-black-primary w-full",
+                "leading-tight focus:outline-none peer placeholder-gray-dark border border-gray-primary-200",
+                (prefixIcon && type === "password")?"rounded-l-sm border-y border-r-0 border-l pl-10":"",
+                (prefixIcon && type !== "password")?"rounded-sm border-t border-b border-r border-l pl-10":"",
+                (!prefixIcon && type === "password")?"rounded-l-sm border-l border-t border-b border-r-0":"",
+                (!prefixIcon && type !== "password")?"rounded-sm border":"",
+                form.formState.errors[id]?
+                    "border-red-600 focus:border-red-600":
+                    "before:bg-green-primary-100 focus:border-gray-primary-500",
                 className,
                 backgroundColor
               )}
@@ -67,9 +69,9 @@ const Textfield = ({form, id, label, placeholder, prefixIcon, type, className, r
                   <div
                       tabIndex={-1}
                       className={classNames(
-                          "select-none absolute left-2 top-2 flex rounded-l-xl text-green-primary-700 justify-center items-center",
+                          "select-none absolute left-2 top-2 flex rounded-l-sm text-gray-primary-700 justify-center items-center",
                           "",
-                          form.formState.errors[id]?"":"peer-focus:bg-green-primary-200",
+                          form.formState.errors[id]?"":"",
                           backgroundColor
                       )}
                   >
@@ -85,9 +87,9 @@ const Textfield = ({form, id, label, placeholder, prefixIcon, type, className, r
                     tabIndex={-1}
                   onClick={visibilityToggle}
                   className={classNames(
-                    "flex rounded-r-xl p-2 justify-center items-center cursor-pointer text-green-primary-700",
-                    "border-r border-t border-b",
-                    form.formState.errors[id]?"border-red-600":"border-transparent peer-focus:bg-green-primary-200 peer-focus:border-green-primary-900",
+                    "flex rounded-r-sm p-2 justify-center items-center cursor-pointer text-gray-primary-700",
+                    "border-r border-t border-b border-gray-primary-200",
+                    form.formState.errors[id]?"border-red-600":"peer-focus:border-gray-primary-500",
                     backgroundColor
                   )}
                 >

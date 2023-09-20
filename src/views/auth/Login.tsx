@@ -11,7 +11,7 @@ import classNames from "classnames";
 import {UserAuth} from "../../models/UserModel";
 import {AuthService} from "../../services/Auth";
 import {toast} from 'react-toastify';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import User from "../../classes/User";
 
 const Login = () => {
@@ -43,18 +43,14 @@ const Login = () => {
     <Auth>
       <form
         onSubmit={form.handleSubmit(submit)}
-        className="flex flex-col p-5 rounded-r-xl items-center justify-center h-full sm:w-2/3"
+        className="flex flex-col rounded-r-xl items-center justify-center h-full"
       >
-        <div className="flex flex-row text-3xl font-bold mb-5 text-green-primary-50">
-          Login
-        </div>
         <Textfield
           form={form}
           id="email"
           placeholder="Email"
           type="text"
           prefixIcon={<Email/>}
-          backgroundColor={"bg-green-primary-50"}
         />
         <Textfield
           form={form}
@@ -62,23 +58,32 @@ const Login = () => {
           placeholder="Password"
           type="password"
           prefixIcon={<LockIcon/>}
-          backgroundColor={"bg-green-primary-50"}
         />
         <Button
           type="submit"
           label="Sign in"
-          prefixIcon={<LoginIcon/>}
-          className="bg-green-primary-700 hover:bg-green-primary-600 text-green-primary-50 font-bold mb-2"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold mb-2"
         />
-        <Button
-          label="Create account"
-          to="/register"
-          prefixIcon={<AccessibilityNewIcon  />}
-          className={classNames(
-              "bg-yellow-primary-500 text-yellow-primary-50 font-bold",
-              "hover:bg-yellow-primary-600"
-          )}
-        />
+          <div className={"flex w-full flex-row gap-6 items-center my-2"}>
+              <hr className={"flex-1 border-gray-primary-200"}/>
+              <div className={"text-gray-primary-700"}>OR</div>
+              <hr className={"flex-1 border-gray-primary-200"}/>
+          </div>
+          <div className={"flex w-full flex-row gap-2 items-center text-gray-primary-700 justify-center"}>
+              <div className={"text-gray-primary-700"}>Don't have an account?</div>
+              <Link to="/register">
+                  <div className={"text-blue-500"}>Subscribe</div>
+              </Link>
+          </div>
+        {/*<Button*/}
+        {/*  label="Create account"*/}
+        {/*  to="/register"*/}
+        {/*  prefixIcon={<AccessibilityNewIcon  />}*/}
+        {/*  className={classNames(*/}
+        {/*      "bg-yellow-primary-500 text-yellow-primary-50 font-bold",*/}
+        {/*      "hover:bg-yellow-primary-600"*/}
+        {/*  )}*/}
+        {/*/>*/}
       </form>
     </Auth>
   );

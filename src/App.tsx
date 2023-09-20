@@ -40,7 +40,13 @@ function App() {
             <div className="flex flex-1 overflow-y-auto">
               <Routes>
                 <Route path="" >
-                  <Route index element={<Home />} />
+                    <Route
+                        index
+                        element={
+                            <ProtectedAuthRoute>
+                                <Home />
+                            </ProtectedAuthRoute>
+                    } />
                   <Route
                       path="login"
                       element={
