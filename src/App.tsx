@@ -46,23 +46,24 @@ function App() {
                             <ProtectedAuthRoute>
                                 <Home />
                             </ProtectedAuthRoute>
-                    } />
-                  <Route
+                        }
+                    />
+                    <Route
                       path="login"
                       element={
                         <ProtectedAlreadyConnectedRoute>
                           <Login />
                         </ProtectedAlreadyConnectedRoute>
                       }
-                  />
-                  <Route
+                    />
+                    <Route
                       path="register"
                       element={
                         <ProtectedAlreadyConnectedRoute>
                           <Register />
                         </ProtectedAlreadyConnectedRoute>
                       }
-                  />
+                    />
                   {/*<Route*/}
                   {/*    path="user"*/}
                   {/*    element={*/}

@@ -13,7 +13,7 @@ export type ButtonProps = {
   type?: string,
 }
 
-const Button = ({label, prefixIcon, suffixIcon, to, link, className, type, onClick }: ButtonProps) => {
+const Button = ({label, prefixIcon, suffixIcon, to, link, className, type, onClick, ...rest }: ButtonProps) => {
   const navigate  = useNavigate();
 
   function handleClick() {
@@ -53,6 +53,7 @@ const Button = ({label, prefixIcon, suffixIcon, to, link, className, type, onCli
           onClick={handleClick}
           type={type?type:"button"}
           value={label}
+          {...rest}
         >
         </input>
         <div

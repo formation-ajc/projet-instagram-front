@@ -2,6 +2,7 @@ const defaultColors = require('tailwindcss/colors')
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -29,7 +30,7 @@ module.exports = {
         white: "#fdfdfd",
         black: {
           ...defaultColors.black,
-          primary: "rgb(5,7,6)",
+          primary: "rgb(0,0,0)",
           light: "rgba(40, 40, 50)",
           dark: "rgba(0,0,0)",
         },
@@ -129,6 +130,8 @@ module.exports = {
       backgroundColor: ['hover', 'focus', 'group-hover', 'group-focus'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }
 

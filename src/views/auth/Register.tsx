@@ -3,12 +3,10 @@ import Textfield from "../../components/ui/Textfield";
 import Email from "@mui/icons-material/Email";
 import LockIcon from '@mui/icons-material/Lock';
 import Button from "../../components/ui/Button";
-import LoginIcon from '@mui/icons-material/Login';
 import Auth from "./Auth";
 import { useForm } from 'react-hook-form'
 import {AuthService} from "../../services/Auth";
 import {UserRegister} from "../../models/UserModel";
-import classNames from "classnames";
 import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 
