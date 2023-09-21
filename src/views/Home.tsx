@@ -3,26 +3,35 @@ import Nav from "./Nav";
 import Post from "../components/ui/Post";
 import moment from "moment";
 import {PostService} from "../services/Post";
-import {PostResponse} from "../models/PostModel";
+import {PostDisplay, PostResponse} from "../models/PostModel";
 import Base64 from "../classes/Base64";
 
 const Home = () => {
     const postService = new PostService();
 
-    const [posts, setPosts] = useState<PostResponse[]>([])
+    const [posts, setPosts] = useState<PostDisplay[]>([])
 
     useEffect(() => {
         postService.getUserPost()?.then((res: { data: PostResponse[] }) => {
             const promises = res.data.map((postResponse) => {
-                return new Promise<PostResponse>((resolve) => {
+                return new Promise<PostDisplay>((resolve) => {
+                    // Create a Blob from the base64 string
+                    const byteCharacters = atob(postResponse.file);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], { type: postResponse.type });
+
                     const reader = new FileReader();
-                    reader.readAsArrayBuffer(Base64.base64ToFile(postResponse.data, postResponse.name));
+                    reader.readAsArrayBuffer(blob);
                     reader.onload = (ev) => {
-                        const src = ev.target?.result as string;
+                        const src = ev.target?.result as ArrayBuffer;
                         resolve({
                             id: postResponse.id,
                             type: postResponse.type,
-                            data: src,
+                            file: src,
                             name: postResponse.name,
                             description: postResponse.description,
                             likes: postResponse.likes,
@@ -49,6 +58,7 @@ const Home = () => {
         });
     }, []);
 
+
     return (
         <>
             <Nav>
@@ -66,7 +76,8 @@ const Home = () => {
                                         date={moment(post.publishDate, "YYYY-MM-DD")}
                                         like={post.likes}
                                         description={post.description}
-                                        src={post.data}
+                                        src={post.file}
+                                        type={post.type}
                                     />
                                 )
                             })}

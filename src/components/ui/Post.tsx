@@ -17,17 +17,20 @@ export type PostProps = {
     like: number,
     description: string,
     comment?: string,
-    src: string
+    src: ArrayBuffer,
+    type: string,
 }
 
-const Post = ({username, date, like, description, comment, src}: PostProps) => {
-    function arrayBufferToDataURI(arrayBuffer: any) {
+const Post = ({username, date, like, description, comment, src, type}: PostProps) => {
+    function arrayBufferToDataURI(arrayBuffer: ArrayBuffer) {
         const bytes = new Uint8Array(arrayBuffer);
         let binary = '';
         for (let i = 0; i < bytes.byteLength; i++) {
             binary += String.fromCharCode(bytes[i]);
         }
-        return 'data:image/jpeg;base64,' + btoa(binary);
+        const dataURI = 'data:' + type + ';base64,' + btoa(binary);
+        console.log('Data URI:', dataURI); // Log the generated data URI for debugging
+        return dataURI;
     }
 
     return (
@@ -51,7 +54,13 @@ const Post = ({username, date, like, description, comment, src}: PostProps) => {
                     </div>
                 </div>
                 <div className={"h-[585px] border border-gray-primary-900 rounded-md flex justify-center items-center"}>
-                    <img src={arrayBufferToDataURI(src)} className={"h-full w-full object-contain"} alt={""}/>
+                    {type.split("/")[0] === "video"?
+                        <video controls className={"h-full w-full object-contain"}>
+                            <source src={arrayBufferToDataURI(src)} type={type} />
+                        </video>
+                        :
+                        <img src={arrayBufferToDataURI(src)} className={"h-full w-full object-contain"} alt={""}/>
+                    }
                 </div>
                 <div className={"flex flex-col gap-2"}>
                     <div className={"flex flex-row justify-between"}>

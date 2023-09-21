@@ -12,46 +12,36 @@ export class PostService {
         }
     }
 
-  addPost(file: File, data: PostPublish) {
-      return new Promise<AxiosResponse<any>>((resolve, reject) => {
-          try {
-              const reader = new FileReader();
-              reader.onerror = (error) => {
-                  console.error(error);
-                  reject(error);
-              };
+    addPost(file: File, data: PostPublish) {
+        return new Promise<AxiosResponse<any>>((resolve, reject) => {
+            try {
+                const formData = new FormData();
+                formData.append('file', file); // 'file' should match the name of the parameter expected by your server
 
-              reader.onloadend = () => {
-                  // Get the base64 data URL
-                  const base64String = reader.result as string;
+                // Append other data to the form data if needed
+                formData.append('name', file.name);
+                formData.append('type', file.type);
+                formData.append('size', file.size.toString());
+                formData.append('isPrivate', 'false');
+                formData.append('description', data.description);
 
-                  // Create an object with the file information and base64 data
-                  const postData = {
-                      name: file.name.split('.')[0],
-                      type: file.type,
-                      size: file.size,
-                      data: base64String,
-                      isPrivate: false,
-                      description: data.description,
-                  };
-
-                  // Send the postData to the server
-                  api.post(process.env.REACT_APP_API_URL + '/posts', postData)
-                      .then((response) => {
-                          resolve(response);
-                      })
-                      .catch((error) => {
-                          console.error(error);
-                          reject(error);
-                      });
-              };
-
-              // Read the file as a data URL (base64)
-              reader.readAsDataURL(file);
-          } catch (error) {
-              console.error(error);
-              reject(error);
-          }
-      });
-  }
+                // Send the formData to the server
+                api.post(process.env.REACT_APP_API_URL + '/posts', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
+                    },
+                })
+                    .then((response) => {
+                        resolve(response);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        reject(error);
+                    });
+            } catch (error) {
+                console.error(error);
+                reject(error);
+            }
+        });
+    }
 }
