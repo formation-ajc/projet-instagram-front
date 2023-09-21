@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
 export type ButtonProps = {
-  label: string,
+  label?: string,
   prefixIcon?: ReactElement,
   suffixIcon?: ReactElement,
   to?: string,
@@ -39,7 +39,7 @@ const Button = ({label, prefixIcon, suffixIcon, to, link, className, type, onCli
       >
         <div
           className={classNames(
-            "absolute left-3 z-0"
+            "absolute left-3 z-0 flex justify-center items-center"
           )}
         >
           {prefixIcon}

@@ -6,7 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 
 
 export type ButtonProps = {
-    label: string,
+    label?: string,
     icon?: ReactElement,
     className?: string,
     children: ReactElement | ReactElement[],
@@ -41,9 +41,9 @@ const Dropdown = ({label, icon, children, className }: ButtonProps) => {
                     <Button
                         label={label}
                         onClick={toogle}
-                        className={"bg-green-primary-700 hover:bg-green-primary-600 text-green-primary-50 p"}
-                        prefixIcon={<PersonIcon/>}
-                        suffixIcon={<KeyboardArrowDownIcon/>}
+                        className={"text-white"}
+                        prefixIcon={icon}
+                        // suffixIcon={<KeyboardArrowDownIcon/>}
                     />
                 </div>
 

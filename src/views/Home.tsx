@@ -71,6 +71,7 @@ const Home = () => {
                                 console.log(posts)
                                 return (
                                     <Post
+                                        id={post.id}
                                         key={index}
                                         username={post.publisher.firstname + " " + post.publisher.lastname}
                                         date={moment(post.publishDate, "YYYY-MM-DD")}

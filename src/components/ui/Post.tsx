@@ -3,13 +3,20 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import {Moment} from "moment";
 import {
+    AddCircleOutline,
     BookmarkBorder,
-    ChatBubble, ChatBubbleOutline, ChatBubbleOutlined,
+    ChatBubble, ChatBubbleOutline, ChatBubbleOutlined, Delete,
     FavoriteBorderOutlined,
     FiberManualRecord,
     MoreHoriz,
     Person, Send
 } from "@mui/icons-material";
+import NewPost from "../../views/NewPost";
+import Modal from "./Modal";
+import Dropdown from "./Dropdown";
+import Button from "./Button";
+import {PostService} from "../../services/Post";
+import {toast} from "react-toastify";
 
 export type PostProps = {
     username: string,
@@ -19,9 +26,12 @@ export type PostProps = {
     comment?: string,
     src: ArrayBuffer,
     type: string,
+    id: number,
 }
 
-const Post = ({username, date, like, description, comment, src, type}: PostProps) => {
+const Post = ({username, date, like, description, comment, src, type, id}: PostProps) => {
+
+    const postService = new PostService()
     function arrayBufferToDataURI(arrayBuffer: ArrayBuffer) {
         const bytes = new Uint8Array(arrayBuffer);
         let binary = '';
@@ -29,9 +39,24 @@ const Post = ({username, date, like, description, comment, src, type}: PostProps
             binary += String.fromCharCode(bytes[i]);
         }
         const dataURI = 'data:' + type + ';base64,' + btoa(binary);
-        console.log('Data URI:', dataURI); // Log the generated data URI for debugging
+        // console.log('Data URI:', dataURI); // Log the generated data URI for debugging
         return dataURI;
     }
+
+    const deletePost = () => {
+
+        console.log(id)
+        postService.deletePost(id)
+            ?.then((e) => {
+                toast.success(e.data.message);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+                toast.error(error.response.data.message);
+            });
+    }
+
 
     return (
         <>
@@ -40,7 +65,7 @@ const Post = ({username, date, like, description, comment, src, type}: PostProps
                     "flex flex-col w-[470px] gap-3",
                 )}
             >
-                <div className={"flex flex-row justify-between"}>
+                <div className={"flex flex-row justify-between items-center"}>
                     <div className={"flex flex-row gap-3"}>
                         <Person/>
                         <div className={"flex flex-row gap-1"}>
@@ -50,7 +75,12 @@ const Post = ({username, date, like, description, comment, src, type}: PostProps
                         </div>
                     </div>
                     <div>
-                        <MoreHoriz/>
+                        <Dropdown icon={<MoreHoriz/>}>
+                            <div className={"flex flex-col p-5 bg-gray-primary-900 rounded-md"}>
+                                <Button onClick={deletePost} className={"bg-red-900"} label={"Delete"} prefixIcon={<Delete/>}/>
+                            </div>
+                        </Dropdown>
+                        {/*<MoreHoriz/>*/}
                     </div>
                 </div>
                 <div className={"h-[585px] border border-gray-primary-900 rounded-md flex justify-center items-center"}>

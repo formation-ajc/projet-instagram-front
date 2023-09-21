@@ -12,6 +12,14 @@ export class PostService {
         }
     }
 
+    deletePost(id: number) {
+        try {
+            return api.delete(process.env.REACT_APP_API_URL + '/posts/' + id);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     addPost(file: File, data: PostPublish) {
         return new Promise<AxiosResponse<any>>((resolve, reject) => {
             try {
@@ -44,4 +52,6 @@ export class PostService {
             }
         });
     }
+
+
 }
